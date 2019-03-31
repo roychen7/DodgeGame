@@ -246,26 +246,28 @@ public class Block extends GameObject {
         }
     }
 
-    public void tick ()  {
-        if (!bool) {
-            double xDiff = x - Game.p.getX();
-            double yDiff = y - Game.p.getY();
-            double distTotalSquared = xDiff * xDiff + yDiff * yDiff;
-            double distTotal = Math.sqrt(distTotalSquared);
-            if (distTotal < 77) {
-                if (Game.p.decLives() > 0) {
-                    System.out.println(Game.p.returnLives() + " lives remaining!");
-                } else {
-                    System.out.println("Game over!");
-                    Game.setRunning(false);
+    public void tick () {
+        if (Game.gameState == 1) {
+            if (!bool) {
+                double xDiff = x - Game.p.getX();
+                double yDiff = y - Game.p.getY();
+                double distTotalSquared = xDiff * xDiff + yDiff * yDiff;
+                double distTotal = Math.sqrt(distTotalSquared);
+                if (distTotal < 77) {
+                    if (Game.p.decLives() > 0) {
+                        System.out.println(Game.p.returnLives() + " lives remaining!");
+                    } else {
+                        System.out.println("Game over!");
+                        Game.handler.objects.remove(Game.p);
+                        Game.gameState = 2;
+                    }
+                    bool = true;
                 }
-                bool = true;
             }
-            }
-        x += velX;
-        y += velY;
+            x += velX;
+            y += velY;
         }
-
+    }
     public void updateBoolean() {
         if (Game.secondsPassed % 2 == 0) {
             bool = false;

@@ -10,6 +10,7 @@ public class Projectile extends GameObject {
     public int type = 4;
     private boolean friendly;
     private boolean bool;
+    private boolean alreadyHit;
 
     public int getType() {
         return this.type;
@@ -38,26 +39,30 @@ public class Projectile extends GameObject {
         speed = 15;
         show = true;
         bool = false;
+        alreadyHit = false;
         }
 
     public void tick() {
         if (show) {
             if (!bool) {
-                if (Game.findEnemy() != -1) {
-                    double xDiff = x - Game.handler.objects.get(Game.findEnemy()).getX();
-                    double yDiff = y - Game.handler.objects.get(Game.findEnemy()).getY();
-                    double distTotalSquared = xDiff * xDiff + yDiff * yDiff;
-                    double distTotal = Math.sqrt(distTotalSquared);
-                    if (distTotal < 75) {
-                        Enemy e = (Enemy)Game.handler.objects.get(Game.findEnemy());
-                        if (e.getHP() > 26) {
-                            e.decHP();
-                            System.out.println(e.getHP() + " hp remaining");
-                        } else {
-                            Game.handler.objects.remove(e);
-                            Game.p.incScore(5);
-                        }
-                        bool = true;
+                    if (Game.findEnemy() != -1) {
+                        double xDiff = x - Game.handler.objects.get(Game.findEnemy()).getX();
+                        double yDiff = y - Game.handler.objects.get(Game.findEnemy()).getY();
+                        double distTotalSquared = xDiff * xDiff + yDiff * yDiff;
+                        double distTotal = Math.sqrt(distTotalSquared);
+                        if (distTotal < 75) {
+                            Enemy e = (Enemy) Game.handler.objects.get(Game.findEnemy());
+                            if (!alreadyHit) {
+                                if (e.getHP() > 26) {
+                                    e.decHP();
+                                    alreadyHit = true;
+                                    System.out.println(e.getHP() + " hp remaining");
+                                } else {
+                                    Game.handler.objects.remove(e);
+                                    Game.p.incScore(5);
+                                }
+                            }
+                            bool = true;
                     }
                 }
             }
@@ -90,7 +95,7 @@ public class Projectile extends GameObject {
     }
 
     public void render(Graphics g) {
-        g.setColor(Color.CYAN);
+        g.setColor(Color.red);
         g.fillOval((int)x, (int)y, 50, 50);
     }
 }

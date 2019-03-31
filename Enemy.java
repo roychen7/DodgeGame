@@ -59,48 +59,52 @@ public class Enemy extends GameObject {
     }
 
     public void tick() {
-        if (!bool) {
-            double xDiff = x - Game.p.getX();
-            double yDiff = y - Game.p.getY();
-            double distTotalSquared = xDiff * xDiff + yDiff * yDiff;
-            double distTotal = Math.sqrt(distTotalSquared);
-            if (distTotal < 77) {
-                if (Game.p.decLives() > 0) {
-                    System.out.println(Game.p.returnLives() + " lives remaining!");
-                } else {
-                    System.out.println("Game over!");
+        if (Game.gameState == 1) {
+            if (!bool) {
+                double xDiff = x - Game.p.getX();
+                double yDiff = y - Game.p.getY();
+                double distTotalSquared = xDiff * xDiff + yDiff * yDiff;
+                double distTotal = Math.sqrt(distTotalSquared);
+                if (distTotal < 77) {
+                    if (Game.p.decLives() > 0) {
+                        System.out.println(Game.p.returnLives() + " lives remaining!");
+                    } else {
+                        System.out.println("Game over!");
+                        Game.handler.objects.remove(Game.p);
+                        Game.gameState = 2;
+                    }
+                    bool = true;
                 }
-                bool = true;
             }
-        }
-        destX = Game.p.getX();
-        destY = Game.p.getY();
-        if ((Math.abs(x - destX) < 8) && (Math.abs(y - destY) < 8)) {
-            moving = false;
-        } else {
-            moving = true;
-        }
-        if (moving) {
+            destX = Game.p.getX();
+            destY = Game.p.getY();
+            if ((Math.abs(x - destX) < 8) && (Math.abs(y - destY) < 8)) {
+                moving = false;
+            } else {
+                moving = true;
+            }
+            if (moving) {
 
-            double diffX = destX - x;
-            double diffY = destY - y;
+                double diffX = destX - x;
+                double diffY = destY - y;
 
-            double temp = speed * speed;
-            double tempDiffX = diffX * diffX;
-            double tempDiffY = diffY * diffY;
+                double temp = speed * speed;
+                double tempDiffX = diffX * diffX;
+                double tempDiffY = diffY * diffY;
 
-            double a = temp / (tempDiffX + tempDiffY);
-            a = Math.sqrt(a);
-            velX = a * diffX;
-            velY = a * diffY;
+                double a = temp / (tempDiffX + tempDiffY);
+                a = Math.sqrt(a);
+                velX = a * diffX;
+                velY = a * diffY;
 
-            x += velX;
-            y += velY;
+                x += velX;
+                y += velY;
+            }
         }
     }
 
     public void render(Graphics g) {
-        g.setColor(Color.red);
+        g.setColor(Color.green);
         g.fillOval((int)x, (int)y, 100, 100);
         g.drawString("HP: " + getHP(), (int)x, (int)y);
     }
