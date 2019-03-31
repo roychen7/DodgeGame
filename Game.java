@@ -25,7 +25,7 @@ public class Game extends Canvas implements Runnable {
     private int blockSpd;
 
     public Game() {
-        blockSpd = 0;
+        blockSpd = 50;
         enemyCounter = 0;
         new Window(WIDTH, HEIGHT, "Dodge", this);
 
@@ -160,7 +160,7 @@ public class Game extends Canvas implements Runnable {
         while (true) {
             randomX = ThreadLocalRandom.current().nextInt(0, 1801);
             randomY = ThreadLocalRandom.current().nextInt(0, 1201);
-            if (distance(randomX, p.getX(), randomY, p.getY()) > 600) {
+            if (distance(randomX, p.getX(), randomY, p.getY()) > 1000) {
                 break;
             }
         }
@@ -169,7 +169,14 @@ public class Game extends Canvas implements Runnable {
             handler.addObject(new Enemy(randomX, randomY, enemyCounter));
         }
         if (notDoneYet) {
-            if (secondsPassed % 0.5 == 0) {
+            if (secondsPassed % 2 == 0) {
+                if (blockSpd + 1 > 100) {
+                    blockSpd = 100;
+                } else {
+                    blockSpd++;
+                }
+            }
+            if (secondsPassed % 1 == 0) {
                 int side = ThreadLocalRandom.current().nextInt(1, 5);
                 int posGivenSide = ThreadLocalRandom.current().nextInt(0, 10);
                 int rotAngle = ThreadLocalRandom.current().nextInt(1, 4);
@@ -358,12 +365,6 @@ public class Game extends Canvas implements Runnable {
                         notDoneYet = false;
                     }
                 }
-            } if (secondsPassed % 10 == 0) {
-                if (blockSpd + 1 > 4) {
-                    blockSpd = 4;
-                } else {
-                    blockSpd++;
-                }
             }
         }
     }
@@ -376,6 +377,7 @@ public class Game extends Canvas implements Runnable {
         }
 
         g = bs.getDrawGraphics();
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 
         g.setColor(Color.orange);
         g.fillRect(0, 0, WIDTH, HEIGHT);
@@ -433,6 +435,7 @@ public class Game extends Canvas implements Runnable {
             @Override
             public void run() {
                 secondsPassed++;
+                Game.p.incScore();
                 notDoneYet = true;
                 for (int i = 0; i < handler.objects.size(); i++) {
                     if (handler.objects.get(i).getType() == 3) {

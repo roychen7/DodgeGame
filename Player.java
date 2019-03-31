@@ -7,6 +7,7 @@ public class Player extends GameObject {
     private int type;
     public double speed;
     private int lives;
+    private int score;
 
     public Player(double x, double y) {
         super(x, y);
@@ -18,11 +19,25 @@ public class Player extends GameObject {
         speed = 9;
         type = 1;
         lives = 3;
+        score = 0;
     }
 
     public void updateBoolean() {
 
     }
+
+    public void incScore() {
+        score++;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void incScore(int inc) {
+        score = score + inc;
+    }
+
     public int getType() {
         return type;
     }
@@ -84,7 +99,9 @@ public class Player extends GameObject {
     }
 
     public void render(Graphics g) {
-        g.setColor(Color.green);
+        g.setColor(Color.black);
         g.fillOval((int)x, (int)y, 64, 64);
+        g.drawString("Score:" + " " + getScore(), (int)x, (int)y);
+        g.drawString("Lives left: " + returnLives(), (int)x, (int)y +80);
     }
 }

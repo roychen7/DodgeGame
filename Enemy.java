@@ -69,7 +69,6 @@ public class Enemy extends GameObject {
                     System.out.println(Game.p.returnLives() + " lives remaining!");
                 } else {
                     System.out.println("Game over!");
-                    Game.setRunning(false);
                 }
                 bool = true;
             }
@@ -103,5 +102,6 @@ public class Enemy extends GameObject {
     public void render(Graphics g) {
         g.setColor(Color.red);
         g.fillOval((int)x, (int)y, 100, 100);
+        g.drawString("HP: " + getHP(), (int)x, (int)y);
     }
 }

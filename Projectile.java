@@ -55,6 +55,7 @@ public class Projectile extends GameObject {
                             System.out.println(e.getHP() + " hp remaining");
                         } else {
                             Game.handler.objects.remove(e);
+                            Game.p.incScore(5);
                         }
                         bool = true;
                     }
