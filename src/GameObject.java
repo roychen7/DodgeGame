@@ -2,14 +2,17 @@ import java.awt.*;
 
 public abstract class GameObject {
     protected double x, y;
-    protected ID id;
+    protected int type;
     protected double velX, velY;
 
-    public GameObject(double x, double y, ID id) {
+    public GameObject(double x, double y) {
         this.x = x;
         this.y = y;
-        this.id = id;
     }
+
+    public abstract void updateBoolean();
+
+    public abstract int getType();
 
     public abstract void tick();
 
@@ -26,12 +29,6 @@ public abstract class GameObject {
     }
     public void setY(int y) {
         this.y = y;
-    }
-    public ID getID() {
-        return id;
-    }
-    public void setID(ID id) {
-        this.id = id;
     }
     public double getVelX() {
         return velX;

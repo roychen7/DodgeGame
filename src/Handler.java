@@ -17,8 +17,10 @@ public class Handler {
     public void addObject(GameObject go) {
         this.objects.add(go);
     }
-    public void removeObject(GameObject go) {
-        this.objects.remove(go);
-    }
 
+    public void removeAll() {
+        for (int i = 0; i < objects.size(); i++) {
+            objects.remove(objects.get(i));
+        }
+    }
 }
