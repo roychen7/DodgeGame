@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.io.IOException;
 
 public class Block extends GameObject {
     public boolean bool = false;
@@ -246,7 +247,7 @@ public class Block extends GameObject {
         }
     }
 
-    public void tick () {
+    public void tick () throws IOException {
         if (Game.gameState == 1) {
             if (!bool) {
                 double xDiff = x - Game.p.getX();
@@ -259,6 +260,7 @@ public class Block extends GameObject {
                     } else {
                         System.out.println("Game over!");
                         Game.handler.objects.remove(Game.p);
+                        Game.writer.writeToFile(Game.scores, Integer.toString(Game.p.getScore()));
                         Game.gameState = 2;
                     }
                     bool = true;

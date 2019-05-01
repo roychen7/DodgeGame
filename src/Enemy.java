@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.io.IOException;
 
 public class Enemy extends GameObject {
     public boolean moving;
@@ -58,7 +59,7 @@ public class Enemy extends GameObject {
         }
     }
 
-    public void tick() {
+    public void tick() throws IOException {
         if (Game.gameState == 1) {
             if (!bool) {
                 double xDiff = x - Game.p.getX();
@@ -71,6 +72,7 @@ public class Enemy extends GameObject {
                     } else {
                         System.out.println("Game over!");
                         Game.handler.objects.remove(Game.p);
+                        Game.writer.writeToFile(Game.scores, Integer.toString(Game.p.getScore()));
                         Game.gameState = 2;
                     }
                     bool = true;
@@ -104,7 +106,7 @@ public class Enemy extends GameObject {
     }
 
     public void render(Graphics g) {
-        g.setColor(Color.green);
+        g.setColor(Color.red);
         g.fillOval((int)x, (int)y, 100, 100);
         g.drawString("HP: " + getHP(), (int)x, (int)y);
     }

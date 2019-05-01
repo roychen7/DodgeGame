@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.io.IOException;
 
 public abstract class GameObject {
     protected double x, y;
@@ -14,9 +15,9 @@ public abstract class GameObject {
 
     public abstract int getType();
 
-    public abstract void tick();
+    public abstract void tick() throws IOException;
 
-    public abstract void render(Graphics g);
+    public abstract void render(Graphics g) throws IOException;
 
     public double getX() {
         return x;

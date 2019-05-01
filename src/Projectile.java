@@ -1,4 +1,7 @@
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 public class Projectile extends GameObject {
     private double startX;
@@ -11,6 +14,7 @@ public class Projectile extends GameObject {
     private boolean friendly;
     private boolean bool;
     private boolean alreadyHit;
+    private Image image;
 
     public int getType() {
         return this.type;
@@ -29,8 +33,9 @@ public class Projectile extends GameObject {
     public boolean getFriendly() {
         return this.friendly;
     }
-    public Projectile(double x, double y, double destX, double destY, boolean friendly) {
+    public Projectile(double x, double y, double destX, double destY, boolean friendly) throws IOException {
         super(x, y);
+        image = ImageIO.read(new File("fireball.png"));
         this.startX = x;
         this.startY = y;
         this.destX = destX;
@@ -96,8 +101,7 @@ public class Projectile extends GameObject {
         }
     }
 
-    public void render(Graphics g) {
-        g.setColor(Color.red);
-        g.fillOval((int)x, (int)y, 50, 50);
+    public void render(Graphics g) throws IOException {
+        g.drawImage(Game.fireball,(int)x,(int)y,null);
     }
 }
